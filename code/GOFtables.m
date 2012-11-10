@@ -1,4 +1,6 @@
 
+% Plumbing script that generate the LaTeX tables from the results files
+
 rowLabels = {'Japanese 10 Yr Future Mini','Can 10 Yr Future',...
     'Euro Bund Future','AUD 10 Yr Future','AU 1-3 year Future'...
     'AUD/USD'  'CAD/USD'  'EUR/USD'  'JPY/USD'};

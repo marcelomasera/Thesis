@@ -6,7 +6,6 @@ function rhohat = pos_def(rho)
 % semidefinite correlation matrices. Communications in Statistics - Theory
 % and Methods, 22(4):965–984, 1993.
 
-
 [garbage,p] = chol(rho);
 
 while(p~=0)
@@ -23,12 +22,12 @@ while(p~=0)
     % rescale correlation matrix
     T       = 1 ./ sqrt(diag(BB));
     TT      = T * T';
-    rho      = BB .* TT;
+    rho     = BB .* TT;
     
-    rho(eye(size(rho,1))==1)=1;
+    rho(eye(size(rho,1))==1) = 1;
     
     [garbage,p] = chol(rho);
     
 end
     
-rhohat=rho;
+rhohat = rho;

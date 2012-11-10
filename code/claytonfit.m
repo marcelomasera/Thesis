@@ -1,7 +1,7 @@
 function theta = claytonfit(U)
     % Uses Kendall tau for 2D, Cherubini, Luciano and Vecchiato 2004 for D>2
 
-    [n,m]=size(U);
+    [n,m] = size(U);
     
     if(m==2)
 
@@ -10,11 +10,8 @@ function theta = claytonfit(U)
         
     elseif(m>2)
         
-    %% initialize optimisation tuning parameters
-%        options=optimset('Display','iter');
+        % initialize optimisation tuning parameters
         options=optimset('Display','off');
-%        options=optimset(options,'TolX',1e-36);
-%        options=optimset(options,'MaxFunEvals',10000);
 
         problem.x1 = 0;
         problem.x2 = 100;
@@ -31,7 +28,7 @@ function theta = claytonfit(U)
 end
 
 function l = LLH(U,t,n,m)
-
+% Log likelihood
     l = n*(m*log(t)+log(gamma(1/t+m))-log(gamma(1/t)))-(t+1)*sum(sum(log(U)))-(1/t+m)*sum(log(sum(U.^(-t),2)-m+1),1);
 
 end

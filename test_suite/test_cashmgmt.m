@@ -1,5 +1,4 @@
 
-
 function [tgtBalances,probMC,riskLevel,errorflag]=test_cashmgmt(metadata,data,params)
 
     %model = 'gaussian';

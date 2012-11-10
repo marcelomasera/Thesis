@@ -6,11 +6,6 @@ function egCopula(theta,color,graph1,graph2,graph3,graph4)
 %   Alexandre Beaulne, Oct. 2011
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% color=true;
-% color=false;
-
-% theta=0.98;
-
 %%%%%%%%%%%%%%%%%%%%%%% PLOT 1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 if(graph1)

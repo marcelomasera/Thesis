@@ -1,4 +1,4 @@
-
+% Plumbing script to print results in LaTeX table
 
 load('backtest_GOF_margins.mat');
 
@@ -13,7 +13,7 @@ for i = 1:length(data.contractsNames)
 end
 
 for j = 1:length(data.fxHeaders)
-    columnLabels{i+j}=strcat(data.fxHeaders{j},'-USD');
+    columnLabels{i+j} = strcat(data.fxHeaders{j},'-USD');
 end
 
 matrix2latex(p, 'marginsGOF.tex',...

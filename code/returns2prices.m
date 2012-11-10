@@ -1,4 +1,4 @@
-function PnL_accounts=returns2prices(metadata,contractsPrices,nbContracts,dContracts)
+function PnL_accounts = returns2prices(metadata,contractsPrices,nbContracts,dContracts)
 
     N = size(dContracts,1);
 
@@ -10,7 +10,7 @@ function PnL_accounts=returns2prices(metadata,contractsPrices,nbContracts,dContr
 
     numXRates = length(metadata.fxHeaders);
 
-    PnL_accounts=NaN(N,numXRates);
+    PnL_accounts = NaN(N,numXRates);
     for i = 1:numXRates
         indices = strcmp(metadata.currencies,metadata.fxHeaders{i});
         PnL_accounts(:,i) = sum(PnL_contracts(:,indices),2);

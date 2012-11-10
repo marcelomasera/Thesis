@@ -3,7 +3,6 @@ n = 1000;
 d = 9;
 thetahat = 5;
 
-
 SPEC = garchset('C',0.5,'K',0.05,'GARCH',0.4,'ARCH',0.4,'AR',0.05);
 
 SPEC = garchset(SPEC,'VarianceModel','GARCH');

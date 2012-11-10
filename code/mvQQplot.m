@@ -1,4 +1,4 @@
-
+% Plot QQ plot (Mahalanobis distance) to show multivariate normality
 
 [metadata,data] = loadData(datenum('28-Mar-2012'),20000000);
 

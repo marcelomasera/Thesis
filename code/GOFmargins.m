@@ -15,7 +15,6 @@ function [p,N,SPEC] = GOFmargins(x,N,SPEC)
   
     [Coeff,garbage,garbage2,Innovations,Sigmas,Summary] = garchfit(SPEC,x);
   
-  
     if(strcmp(SPEC.Distribution,'Gaussian'))
         cdf = @(z) normcdf(z,0,1);
     elseif(strcmp(SPEC.Distribution,'T'))
@@ -24,7 +23,6 @@ function [p,N,SPEC] = GOFmargins(x,N,SPEC)
         error('SPEC.Distribution is wrong');
     end
       
-  
     % Summary
     z = Innovations./Sigmas;
   

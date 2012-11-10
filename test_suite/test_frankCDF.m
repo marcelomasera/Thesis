@@ -1,9 +1,9 @@
 
-U=copularnd('Frank',1,1000);
+U = copularnd('Frank',1,1000);
 
-Y1=copulacdf('Frank',U,1);
+Y1 = copulacdf('Frank',U,1);
 
-Y2=frankCDF(U,1);
+Y2 = frankcdf(U,1);
 
 hist(abs(Y1-Y2),50);
 

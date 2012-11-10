@@ -92,8 +92,8 @@ elseif(strcmp(model,'gaussian'))
     mu = mean(dX);
     Sigma = cov(dX);
   
-    varargout{1}=mu;
-    varargout{2}=Sigma;
+    varargout{1} = mu;
+    varargout{2} = Sigma;
 else
     error('model argument must be either gaussian or scomdy');
 end
