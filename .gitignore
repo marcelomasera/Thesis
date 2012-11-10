@@ -1,0 +1,39 @@
+
+# Proprietary Matlab stuff
+*/est_archi.m
+*/gen_Student.m
+*/GOFclayton.m
+*/GOFgaussian.m
+*/GOFstudent.m
+*/Rosenblatt_Clayton.m
+*/Rosenblatt_Gaussian.m
+*/Rosenblatt_Student.m
+*/Sn_b.m
+*.mexa64
+*.mexw32
+*.mat
+
+# LaTeX stuff
+*.tex
+*.bib
+*.aux
+*.bbl
+*.blg
+*.log
+*.nav
+*.out
+*.toc
+
+# Other
+*.zip
+*.gz
+*.snm
+*.jpg
+*.JPG
+corr1.pdf
+corr2.pdf
+corr3.pdf
+latex_paper/*
+latex_thesis/*
+papers/*
+presentation/*
