@@ -1,0 +1,77 @@
+\documentclass{article}
+
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{setspace}
+\usepackage{dsfont}
+\usepackage{multirow}
+\usepackage{chngpage}
+
+\pagestyle{myheadings}
+\markright{}
+
+\renewcommand\footnotemark{}
+
+\bibpunct{(}{)}{,}{a}{,}{,}
+
+\onehalfspacing
+
+\hyphenation{multi-currency}
+\hyphenation{sub-period}
+
+\title{Managing currency risk: An application of copula-based multivariate
+dynamic models}
+\author{Alexandre Beaulne, HEC Montr\'eal \and Bruno R\'emillard, HEC Montr\'eal
+\and Pierre Laroche, National Bank of Canada}
+
+\begin{document}
+
+\abovedisplayskip=0.5cm
+\abovedisplayshortskip=0.4cm
+\belowdisplayskip=0.5cm
+\belowdisplayshortskip=0.4cm
+
+\maketitle\thispagestyle{empty}
+
+\input{abstract}
+
+\renewcommand{\thefootnote}{}
+\footnotetext{\hspace*{-.51cm}AMS 2010 subject classification: Primary: 91G10, 91G70\\
+Key words and phrases: copula-based multivariate dynamic models, foreign exchange risk,
+multidimensional constrained optimization, collateral management}
+
+\input{introduction}
+
+\input{modeling}
+
+\input{optimisation}
+
+\section{Backtesting}
+\label{backtesting}
+\input{dataset}
+
+\input{backtesting}
+
+\clearpage
+
+\input{conclusion}
+
+\appendix
+\input{GOF}
+
+\bigskip
+{\bf Acknowledgements}
+
+The authors wish to thank Sandrine Th\'eroux and Innocap Investment
+Management for generously providing the dataset used in this
+article.
+
+\bibliographystyle{plainnat}
+\bibliography{bibfile}
+\addcontentsline{toc}{section}{References}
+
+\end{document}
+

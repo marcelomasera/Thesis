@@ -1,0 +1,140 @@
+\section{Goodness-of-fit tests}
+\label{GOF}
+Responsible modeling requires proper testing as to whether the modeled data do in fact belong
+to the chosen model. When it comes to dynamic models, many authors either omit goodness-of-fit (GOF)
+tests, or use only relative tests that ranks the fit of different models. The problem with the latter
+approach is that picking the model with the best fit out of a set of incorrect models will still yield
+an incorrect model. Fortunately, absolute GOF tests for dynamic models based on parametric
+bootstrapping have recently been made available in the literature \citep{genestetal09,Remillard11b}.
+
+The null hypothesis of the GOF test for a general dynamic univariate
+process $X$ can be stated as follows:
+\begin{quote}
+$H_0$: The conditional distribution of $X_{t}$ given
+$\mathcal{F}_{t-1}$ is $F_{t,\mathbf{\theta}}$, for some parameter
+$\mathbf{\theta} \subseteq \mathcal{O}$.
+\end{quote}
+
+Under the null hypothesis, it can be shown that $U_1 =
+F_{1,\mathbf{\theta}}(X_1),\ldots, U_T =F_{T,\mathbf{\theta}}$ are
+i.i.d. uniform variates on $(0,1)$.
+A general recipe to use parametric bootstrapping for the hypothesis is as follow:
+\begin{enumerate}[(i)]
+\item \label{step1} Estimate the parameter $\mathbf{\theta}$ on the process $X_{1}, \ \ldots \ ,X_{T}$ by $\hat{\mathbf{\theta}}$.
+\item \label{step2} Compute a distance statistic $S_T$ between the uniform distribution function and the distribution function $F_T$ of the pseudo-observations
+$u_1 = F_{1,\hat{\mathbf{\theta}}}(X_1),\ldots, u_T
+=F_{T,\hat{\mathbf{\theta}}}(X_T)$. A good candidate is the
+Cram\'er-von Mises criterion:
+\begin{displaymath}
+S_T= \int_0^1 \left\{F_T(u)-u\right\}^2 du.
+\end{displaymath}
+\item \label{step3} Generate a large number $k=1, \ \ldots \ ,N$ of random sequences
+$X_{1}^{(k)}$, $\ldots$, $X_{T}^{(k)}$ from the dynamic model with
+parameters $\hat{\mathbf{\theta}}$.
+\item For each $k$ from step (\ref{step3}):
+\begin{enumerate}[(a)]
+\item Estimate the parameter $\mathbf{\theta}$ by $\mathbf{\theta}^{(k)}$ for the sample  $X_{1}^{(k)}, \ \ldots \ ,X_{T}^{(k)}$.
+\item Compute the same distance statistic $S_T^{(k)}$ as in step
+\eqref{step2} for the sample $X_{1}^{(k)}, \ \ldots \ ,X_{T}^{(k)}$.
+
+\end{enumerate}
+\item The p-value of the test is approximated by the fraction of values $S_T^{(k)}$
+greater than the $S_T$ computed in step (\ref{step2}):
+\begin{displaymath}
+p=\frac{1}{N} \sum_{k=1}^N \mathds{1}\left(S_T^{(k)}>S_T\right).
+\end{displaymath}
+\end{enumerate}
+
+As for the null hypothesis of the GOF test of a copula-based
+multivariate dynamic model, it is of the form
+\begin{quote}
+$H_0$: The  copula associated with the innovations $ \epsilon_{t} =
+(\epsilon_{1,t},\ldots,\epsilon_{D,t})$, $t=1, \ \ldots \ , T$,
+ belongs to a parametric  family $C{_\mathbf{\Theta}}$.
+\end{quote}
+The procedure for the parametric bootstrap is:
+\begin{enumerate}[(i)]
+\item \label{stepone} Estimate the parameters of each univariate marginal process and compute the associated standardized residuals $e_t=(e_{1,t},\ldots, e_{D,t})$, $t=1,\ldots,T$.
+\item \label{steptwo} Compute the normalized ranks $u_{i,t}, \ i=1, \ \ldots \ , D, \ t=1, \ \ldots \ , T$ of the standardized residuals resulting from step (\ref{stepone}):
+\begin{displaymath}
+u_{i,t}=\frac{1}{T+1} \sum_{k=1}^T \mathds{1}(e_{i,t}\geq e_{i,k}).
+\end{displaymath}
+\item \label{stepthree} Estimate the dependence parameter $\mathbf{\Theta}$ of the parametric copula by $\hat{\mathbf{\Theta}}$, using the normalized ranks resulting from step (\ref{steptwo}).
+\item \label{stepfour} Compute a distance statistic $S_T$ between the empirical copula $C_T$
+of the normalized ranks and the parametric copula
+$C_{\hat{\mathbf{\Theta}}}$, where the empirical copula is given by
+\begin{displaymath}
+C_T(x_1, \ \ldots \ , x_D)=\frac{1}{T} \sum_{t=1}^T \prod_{i=1}^D
+\mathds{1}(u_{i,t} \leq x_{i}).
+\end{displaymath}
+A good candidate for $S_T$ is the Cram\'er-von Mises statistic
+\begin{displaymath}
+S_T=\frac{1}{T} \sum_{t=1}^T \left\{C_T(u_{1,t}, \ \ldots \ ,
+u_{D,t})-C_{\mathbf{\theta}}(u_{1,t}, \ \ldots \ ,
+u_{D,t})\right\}^2.
+\end{displaymath}
+\item For some large integer $N$, repeat the following steps for each $k$ in $[1,\ldots,N]$:
+\begin{enumerate}[(i)]
+\item[(a)] \label{a} Generate random vectors $\mathbf{U}_1^{(k)},\ldots, \mathbf{U}_T^{(k)}$ with distribution $C_{\hat{\mathbf{\Theta}}}$.
+Most existing statistical packages does not currently support the
+generation of multivariate Archimedean copulas random variables;
+recipes to do so are proposed in \cite{marshallolkin88}.
+\item[(b)] Repeat steps (\ref{steptwo}) to (\ref{stepfour}) on
+trajectories generated in (a) to obtain $S_T^{(k)}, \ k=1, \ \ldots \ , N$.
+\end{enumerate}
+\item The approximate \emph{p}-value for the test is given by
+\begin{displaymath}
+p=\frac{1}{N} \sum_{k=1}^N \mathds{1}\left(S_T^{(k)}>S_T\right).
+\end{displaymath}
+\end{enumerate}
+
+Using the above procedure to test for the goodness-of-fit of elliptical
+copulas can prove tedious because
+there exists no explicit form for their cumulative distribution functions and Monte
+Carlo integration of equations (\ref{gaussiancopuladist}) or (\ref{tcopuladist})
+requires excessive computational resources for any
+non-small number of dimensions. An ingenious alternative is described by
+\cite{genestetal09}. The method uses a critical property of Rosenblatt's probability
+integral transform $\mathcal{T}$  \citep{rosenblatt52}, namely that a
+multivariate vector $\mathbf{U} \ \in \ [0,1]$ has distribution function $C$
+if and only if the Rosenblatt transform of $\mathbf{U}$ has the independence
+copula as distribution function $C_\perp$:
+\begin{displaymath}
+\mathbf{U} \sim C \ \Leftrightarrow \ \mathcal{T}(\mathbf{U}) \sim C_{\perp}
+\end{displaymath}
+The algorithm of the parametric bootstrap test applied to the elliptical copulas is as follow:
+\begin{enumerate}
+\item \label{i} Estimate the parameters of each univariate marginal process and compute the associated standardized residuals $e_t=(e_{1,t},\ldots, e_{D,t})$, $t=1,\ldots,T$.
+\item \label{ii} Compute the normalized ranks $\mathbf{u}_t = (u_{1,t}, \ldots, u_{D,t})$, where for $i=1, \ldots \ , D$, and $ t=1, \ \ldots \ , T$,
+$$
+u_{i,t}=\frac{1}{T+1} \sum_{k=1}^T \mathds{1}(e_{i,t}\geq e_{i,k}).
+$$
+\item \label{iii} Estimate the dependence parameter $\mathbf{\Theta}$ of the parametric copula by $\hat{\mathbf{\Theta}}$, using the normalized ranks resulting from step (\ref{ii}).
+\item \label{iv} Compute Rosenblatt transforms $\mathbf{v}_t= (v_{1,t},\ldots,v_{D,t}) = \mathcal{T}_{\hat{\mathbf{\Theta}}}(\mathbf{u}_t)$,
+$t=1,\ldots,T$.
+\item \label{v} Compute a distance statistic $S_T$ between the empirical copula $C_T$
+of the Rosenblatt transforms and the independence copula $C_{\perp}$.
+The empirical copula is given by
+\begin{displaymath}
+C_T(x_1, \ \ldots \ , x_D)=\frac{1}{T} \sum_{t=1}^T \prod_{i=1}^D
+\mathds{1}(v_{i,t} \leq x_{i}).
+\end{displaymath}
+The Cram\'er-von Mises criterion in this case is given by:
+\begin{align*}
+S_T = {} & T \int_{[0,1]^D} \{F_T(\mathbf{v})-C_\perp(\mathbf{v}) \}^2 d\mathbf{v}\\
+= {} & \frac{T}{3^D}-\frac{1}{2^{D-1}}\sum_{t=1}^{T} \prod_{i=1}^D
+\left( 1-v_{i,t}^2\right)+\frac{1}{T} \sum_{t=1}^T \sum_{k=1}^T
+\prod_{i=1}^D (1-\max(v_{i,t},v_{i,k})).
+\end{align*}
+\item For some large integer $N$, repeat the following steps for each $k$ in $[1,\ldots,N]$:
+\begin{enumerate}
+\item[(a)] \label{a} Generate random vectors $\mathbf{U}_1^{(k)},\ldots, \mathbf{U}_T^{(k)}$ with distribution $C_{\hat{\mathbf{\Theta}}}$.
+\item[(b)] Repeat steps (\ref{ii}) to (\ref{iv}) on
+trajectories generated in (a) to obtain $S_T^{(k)}, \ k=1, \ \ldots
+\ , N$.
+\end{enumerate}
+\item The approximate \emph{p}-value for the test is given by
+\begin{displaymath}
+p=\frac{1}{N} \sum_{k=1}^N \mathds{1}\left(S_T^{(k)}>S_T\right).
+\end{displaymath}
+\end{enumerate}

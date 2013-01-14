@@ -15,7 +15,7 @@ else
     startTime = 1;
 end
 
-[metadata,data] = loadData(datenum('28-Mar-2012'),20000000,'graphoff');
+[metadata,data] = loadData(datenum('28-Dec-2012'),20000000);
 
 N = length(data.dates);
 

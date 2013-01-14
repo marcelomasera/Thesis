@@ -29,7 +29,7 @@ options = optimset(options,'DiffMinChange',1000);
 options = optimset(options,'DiffMaxChange',100000);
 options = optimset(options,'Algorithm','interior-point');
 
-[metadata,data] = loadData(datenum('28-Mar-2012'),20000000,'graphoff');
+[metadata,data] = loadData(datenum('28-Dec-2012'),20000000);
 
 T = length(data.dates);
 BUFFER=500;

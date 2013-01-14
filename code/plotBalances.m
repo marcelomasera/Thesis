@@ -1,9 +1,9 @@
 
 function plotBalances(metadata,data,riskMeasure,alpha,tolerance,color,print)
 %
-% [metadata,data] = loadData(datenum('28-Mar-2012'),20000000);
+% [metadata,data] = loadData(datenum('28-Dec-2012'),20000000);
 %
-% plotBalances(metadata,data,'ETE',0.05,0.05,true,false)
+% plotBalances(metadata,data,'TCE',0.05,0.05,false,true)
 %
 
 %%%%%%%%%%%%%%%%%%% params to change %%%%%%%%%%%%%%%%%%%%%%
@@ -74,8 +74,7 @@ for i = 1:n
 end
 
 if(print)
-%     printfig(h,8,12,'tgtBalances','.jpg')
-    export_fig tgtBalances -jpg -r300
+    printfig(h,7,9,'tgtBalances','.eps',300)
 end
 
 end

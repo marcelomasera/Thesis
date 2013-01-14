@@ -15,7 +15,7 @@ function backtestGOFmargins(margin,N,freqGOF)
 
 SPEC=SPECset(margin);
 
-[metadata,data] = loadData(datenum('28-Mar-2012'),20000000);
+[metadata,data] = loadData(datenum('28-Dec-2012'),20000000);
 
 T=length(data.dates);
 

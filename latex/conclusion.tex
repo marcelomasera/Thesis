@@ -1,0 +1,27 @@
+\section{Conclusion}
+\label{conclusion}
+We met three objectives in this work; first, we proposed a model that
+better fits high-dimensional multivariate financial time-series than the classical
+Gaussian model with the copula-based multivariate dynamic model. Second, we used
+recent advances in absolute goodness-of-fit tests to show the appropriateness of the
+chosen model from a statistical point of view. Third, we used the proposed model
+to solve a problem encountered by managers
+whose portfolio contains multiple assets on different exchanges and/or in different
+currencies, that is, how to balance the opposing nuisances
+of margin calls and foreign exchange risk on collateral posted in a currency
+different from the participant's benchmark currency. The solution lies in calibrating
+the model proposed in this work (or another robust model encapsulating stochastic
+volatility, excess kurtosis and higher co-moments) to the financial time series of interest.
+Then the desired constrained optimization is solved using Monte Carlo methods.
+
+Two potential avenues of future study are improvements in model sophistication
+and the development of rigorous models for problems with high numbers of random
+variables. On the first front, models
+including time-varying copula parameters, regime-switching and/or correlation asymmetry
+may yield a better
+fit to financial time series. On the second front, portfolios
+often have a large number of assets in many different currencies, however the
+use of copula becomes exponentially harder when the number of dimension
+is above 10. Methods for dimensionality reduction that conserve higher moments
+in the factors or efficiency improvements in algorithms for copula use would help
+toward accomplishing this objective.

@@ -1,0 +1,114 @@
+\section{Introduction}
+With the globalization of financial markets, investors have access to a larger
+investment universe giving them the opportunity to better diversify their
+portfolio. A subclass of financial transactions (short selling and entering
+into derivative contracts for example) requires the posting of margins, that is,
+the deposit of collateral to attenuate the credit risk for the counterparty. If
+such a transaction is performed in a foreign market, the required collateral
+will most likely be in a currency different from the portfolio's benchmark
+currency, creating foreign exchange risk for the global investor. This investor
+might therefore want to maintain the posted collateral to the strict minimum.
+This policy will however maximize the probability that the counterparty, either
+the investor's broker or exchange, will require the posting of additional
+collateral following an adverse price change, so-called a margin call.
+
+Margin calls sometimes result in undesired operational costs for investors, they
+are therefore to be avoided if possible. Not only counterparties may impose
+penalties on margin calls, but the regulatory framework agreed upon by members
+of the Basel Committee on Banking Supervision in the Basel III accords impose
+tougher capital buffers and liquidity coverage on derivatives transactions
+\citep{basel1,basel2}.
+
+The purpose of this work is to use recent developments in the field of
+econometrics to come up with a  rigorous solution to the problem of
+multicurrency collateral management. In addition, the methodology proposed here
+can be extended to many financial and risk management applications where an
+optimization problem needs to be constrained by practical considerations
+(transaction costs for example). 
+
+The quest to a better understanding and forecasting of financial time series
+resulted in a constant increase in the level of sophistication of econometrics
+models. For univariate series, the canonical Brownian process
+\citep{brown1828, bachelier1900, merton69} has often been substituted with more
+recent models capturing empirical properties of the financial time series such
+as heteroskedasticity and leptokurticity (fat tails). The most popular of these
+models are AutoRegressive Conditionnal  Heteroskedasticity (ARCH) \citep{engle82}
+and its extension the generalized ARCH (GARCH) \citep{bollerslev86}. In these
+models, the variance, and hence the volatility, of the time series for a given
+period is a direct function of the variance in the previous period, thus
+accounting for volatility clustering. Furthermore, the processes generate data
+with fatter tails than the normal density. Thanks to its parsimonious notation
+(see equations \eqref{drift} and \eqref{volatility} in Section~\ref{modelling}),
+GARCH has become the most popular ARCH model in practice, including this work.
+
+Proper financial modeling requires the consideration of dependence
+between time series. For this reason the development of multivariate models
+quickly followed the one of univariate models. It is now widely accepted
+\citep{cont01, yue12} that robust risk management requires the inclusion of
+higher-order moments and co-moments in the time series of financial assets.
+Not only do univariate distributions capturing higher moments need to be picked
+to model single financial time series, but a model of dependence between the
+different time series allowing for higher co-moments is primordial. Indeed,
+traditional linear correlation between the returns of financial assets fails
+to capture the ``correlation breakdown'' or ``assets boom alone but bust
+together'' asymmetry observed in the markets. Models have been proposed to
+extend the ARCH-type framework described in the  previous paragraphs to
+multivariate settings. They all face the challenge of balancing sophistication
+with parsimony, of being flexible enough to capture co-moment dynamics while
+avoiding the curse of dimensionality. For a comprehensive survey of
+multivariate GARCH models, refer to \cite{silvennoinen08} or \cite{laurent06}.
+
+A promising family of multivariate models combines the tractability of univariate
+processes with the power of copulas to capture the dependence between the marginal
+process in a robust manner. A copula, in combination with the univariate marginal
+distributions,  is sufficient to fully specify a multivariate distribution
+function, as proven by \cite{sklar59}. The copula $C$ underlying the random
+variables $X_1$, $X_2$, $\ldots$, $X_D$ is the joint cumulative distribution
+function of the transformed variables $F_1(x_1), F_2(x_2), \ldots,  F_D(x_D)$,
+where $F_i(x)=\mathbb{P}[X_i \leq x]$ are the marginal cumulative distribution
+functions, and
+\begin{displaymath}
+C(u_1, \ u_2, \ \ldots \ , u_D)=\mathbb{P}[F_1(X_1) \leq u_1, \
+F_2(X_2) \leq u_2, \ \ldots \ , F_D(X_D) \leq u_D].
+\end{displaymath}
+This work owes much to the findings of Chen Xiaohong and Fan Yanqin
+\citep{chenfan06}, Andrew Patton \citep{patton00,patton06} and Bruno
+R\'emillard \citep{Remillard11}. The basis of these articles is that
+the dependence between the error terms of multivariate time series
+is described not in term of traditional correlation but by a given
+copula.
+
+Unfortunately, copulas have often been used prior to the existence of
+proper goodness-of-fit tests, that is, without properly testing whether
+the data being modeled belongs to the chosen copula or not in a
+statistically significant manner. One of the first instance of copulas
+goodness-of-fit test for multivariate time series  can be found in
+\cite{chenfan06}, however this test can only rank the appropriateness
+of different copulas relative to each other, not in a statistically
+absolute sense. Fortunately, \cite{genestetal09} and \cite{Remillard11}
+applied the parametric bootstrapping technique to copulas allowing one
+to do so in an intuitive, powerful manner. Its use with copulas evolved
+naturally from previous applications to univariate and multivariate
+distributions. The application of this test prevents the use of a copula
+where inappropriate.
+
+The tools developed in this work can also be applied to related problems:
+balancing tracking error and transaction costs (see \cite{chanramkumar11}),
+foreign currency risk and hedging costs (see \cite{campbell2010}), sales
+and marketing costs, etc. In the case of balancing foreign exchange risk
+on posted collateral and the costs associated to margin calls, global
+investors have historically used heuristics or more sophisticated policies
+to mitigate the two inconveniences. For literature on the subject, one
+can refer to \cite{MillerOrr, higson10} for solutions to the similar
+problem of optimal inventory management, to \cite{cotter01,lam04,kao10,longin99}
+for solutions to the problem of setting the margins requirements
+by a central counterparties (e.g. clearing houses) and to
+\cite{fujii2010} for an example where the market participant has
+the choice of collateral currency.
+
+The remainder of this article is organized as follows. Section~\ref{modelling}
+exhibits the framework used to model the dynamics of the asset prices and
+exchange rates. Section~\ref{optimisation} overviews the optimization problem at
+hand. Section~\ref{backtesting} presents the results of a backtest of the
+proposed solution performed on a real data set. Section~\ref{conclusion}
+concludes and proposes avenues of future research.

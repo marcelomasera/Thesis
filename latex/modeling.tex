@@ -1,0 +1,139 @@
+\section{Copula-based multivariate dynamic models}
+\label{modelling}
+In order to develop a cash management strategy which strikes an optimal balance
+between the opposing goals of minimizing foreign exchange risk and minimizing
+the cost associated with margin calls, it is first necessary to choose a model of underlying asset prices
+and exchange rates movements. It is now widely accepted that proper modeling
+is robust to volatility clustering and excess kurtosis. That is, the volatility in
+financial time series is not constant across time but periods of relatively high volatility
+tend to cluster together. Furthermore, the probability of extreme events in the joint
+distributions of multivariate financial time series innovations is higher than predicted
+under a Gaussian model. The latter phenomenon is also known as ``fat tails''.
+Refer to \cite{pagan96, cont01}
+for evidence of stylized facts of financial time series and more precisely to
+\cite{casper94, guillaume97} for evidence of such facts in exchange rate returns.
+
+We propose the use of a dynamic multivariate discrete stochastic volatility model
+with a copula-based dependence structure. This model has been successfully applied
+to exchange rate returns in the literature \citep{chenfan06,Remillard11,patton06}. The
+multivariate time series $\mathbf{X}_t$, $t\geq 1$ has $D$ dimensions and is given by
+\begin{equation}
+\label{dynmodel}
+    X_{i,t}=\mu_t(\boldsymbol\theta_i)+h_t(\boldsymbol\theta_i)^{1/2} \
+    \epsilon_{i,t},
+\end{equation}
+where $i=1,\ldots,D$
+and innovations $\epsilon_{1,t},\ldots,\epsilon_{D,t}$ are \emph{i.i.d.} with
+copula distribution function $C$.
+
+We know from Sklar theorem \citep{sklar59} that, given that $K$ is continuous, there
+exists a unique copula $C$ such that
+\begin{equation}
+\label{sklar}
+     K(x_1,\ldots,x_D)=C_{\boldsymbol\theta}(F_1(x_1),\ldots,F_D(x_D)),
+\end{equation}
+where the $F_i$ are the cumulative distribution
+functions of the marginal distributions $X_i$ and $C_{\boldsymbol\theta}$ is the copula
+function with parameter(s) $\boldsymbol\theta$.
+
+An interesting property of copulas is that the dependence between the variables is
+encapsulated in the copula function and is independent of the marginal distribution
+functions chosen.
+
+We model the marginal distributions of the financial time series
+with AR(k)-GARCH(p,q) models \citep{bollerslev86}. We chose this
+model because we believe it offers the best equilibrium between
+sophistication and parsimony. Their formulation is given by
+\begin{equation}
+\label{drift}
+    \mu_t(\boldsymbol\theta_i)=\kappa_{\mu,i}+ \sum_{j=1}^k \gamma_{i,j} \
+    x_{i,t-j},
+\end{equation}
+and
+\begin{equation}
+\label{volatility}
+    h_t(\boldsymbol\theta_i)=\kappa_{h,i} + \sum_{j=1}^q \alpha_{i,j} \ \epsilon_{i,t-j}^2 +  \sum_{j=1}^p \beta_{i,j} \
+    h_{t-j}(\boldsymbol\theta_i).
+\end{equation}
+
+We tested the goodness-of-fit of common elliptical (Gaussian and
+Student) and Archimedean (Clayton, Frank, Gumbel)  copulas on the
+standardized residuals of the AR-GARCH margins processes emerging
+from the dataset described in section \ref{dataset}. Their
+distributions are given below, and the recipe of the parametric
+bootstrapping goodness-of-fit tests is given in Appendix \ref{GOF}.
+
+The Gaussian copula with dependence parameter matrix $\Sigma$ is given by
+\begin{equation}
+\label{gaussiancopuladist}
+C_{\Sigma}(\mathbf{u})=\Phi_{\Sigma}\left(\Phi^{-1}(u_1), \ \ldots
+\, \Phi^{-1}(u_D)\right),
+\end{equation}
+where $\Phi^{-1}(\cdot)$ is the inverse cumulative distribution function of a standard normal, $\Phi_{\Sigma}(\cdot)$ is the joint
+cumulative distribution function of a multivariate normal distribution with zero means and covariance matrix $\Sigma$. Its density is given by
+\begin{displaymath}
+c_{\Sigma}(\mathbf{u})=\left| \Sigma \right|^{-\frac{1}{2}} \
+\exp\left(-\frac{1}{2}  \left(\begin{array}{c} \Phi^{-1}(u_1)\\
+\vdots \\  \Phi^{-1}(u_D) \end{array}  \right)^T
+(\Sigma^{-1}-\mathbf{I}) \left(\begin{array}{c} \Phi^{-1}(u_1)\\
+\vdots \\  \Phi^{-1}(u_D) \end{array}  \right)\right).
+\end{displaymath}
+
+The \emph{D}-dimensional Student copula distribution as given by \citep{mcneil05}:
+\begin{equation}
+\label{tcopuladist} C_{\Sigma,\nu}(\mathbf{u}) =
+\int_{-\infty}^{t_{\nu}^{-1}(u_1)}  \ldots
+\int_{-\infty}^{t_{\nu}^{-1}(u_D)} \frac{\Gamma\left(
+\frac{\nu+D}{2}\right)}{\Gamma \left( \frac{\nu}{2} \right)
+\sqrt{(\pi \nu)^D |\Sigma|}} \left( 1+\frac{\mathbf{x}' \Sigma^{-1}
+\mathbf{x}}{\nu}\right)^{-\frac{\nu+D}{2}} d\mathbf{x},
+\end{equation}
+where
+$t_{\nu}^{-1}()$ is the quantile function of a standard univariate Student distribution with $\nu$
+degrees of freedom. Its density can be derived to be
+\begin{equation}
+\label{tcopuladens}
+c_{\Sigma,\nu}(\mathbf{u})=\frac{f_{\Sigma,\nu}(t_{\nu}^{-1}(u_1),\ldots,t_{\nu}^{-1}(u_D))}{\prod_{i=1}^D
+f_{\nu}(t_{\nu}^{-1}(u_i))},
+\end{equation}
+where $f_{\Sigma,\nu}$ is the joint density of a D-dimensional random vector from a multivariate
+Student distribution with $\nu$ degrees of freedom and covariance matrix $\Sigma$ and
+$f_{\nu}$ is the density of a univariate Student distribution with $\nu$ degrees of freedom.
+ This copula not only captures excess kurtosis but was also shown to accurately model
+the dependence between financial time series in recent literature \citep{chenfan06,fisher09}.
+
+Archimedean copulas are characterized by a single dependence parameter and the following representation:
+\begin{displaymath}
+C(u_1, \ u_2, \ \ldots \ ,
+u_D)=\psi(\psi^{-1}(u_1)+\ldots+\psi^{-1}(u_D)),
+\end{displaymath}
+where $\psi(\cdot)$ is the \emph{generator} of the copula. The
+generators for the three Archimedean copulas tested in the applied
+section of this thesis are displayed in table \ref{archi}.
+\begin{table}[htb]
+    \centering
+    \begin{footnotesize}
+    \begin{tabular}{c c c c}
+    \textbf{Family}&\textbf{Generator} $\boldsymbol\psi\mathbf{(t)}$&\textbf{Parameter}&$\mathbf{G}$\textbf{-distribution}\\
+    Clayton&$(1+t)^{-1/\theta}$&$0 < \theta < \infty$&Gamma$(1/\theta,1)$\\
+    Frank&$-\frac{1}{\theta}\log(1-(1-e^{-\theta}) e^{-t})$&$0 < \theta < \infty$&Log series with $\alpha=(1-e^{-\theta})$\\
+    Gumbel&$\exp(-t^{1/\theta})$&$1 \leq \theta < \infty$&Stable$(1/\theta,1,(\cos(\pi/(2\theta)))^{\theta},0)$\\
+    \end{tabular}
+    \end{footnotesize}
+    \caption[Generators of selected Archimedean copulas]{Generators of selected Archimedean copulas. G-distribution refers to the
+distribution that has as Laplace transform the generator $\psi(\cdot)$.}
+    \label{archi}
+\end{table}
+
+
+The parameters of the marginal processes and dependence copula can
+be estimated with the maximum likelihood estimation (MLE) method. An
+alternative two-stage estimation method for the Student copula
+is proposed by \cite{mcneil05b}.
+
+\cite{chenfan06} showed the important result that applying the copula dependence structure
+from equation (\ref{sklar}) to the innovations $\epsilon_{i,t}$ from equation (\ref{dynmodel}) rather
+than to the realizations $X_{i,t}$ yields the same results
+in terms of estimation of the parameters of the copula. \cite{Remillard11} showed that
+the empirical copula and most dependence measures are unaffected as well.
+

@@ -1,10 +1,14 @@
 
-z = trnd(4,10000,9);
+N = 20000;
 
-hist(z(:,1),50);
+d = 2;
 
-U = pseudos(z);
+U = rand(N,d);
 
-disp(max(max(U)));
+Uhat = pseudos(U);
 
-disp(min(min(U)));
+[U(1:10,:) Uhat(1:10,:)]
+
+%if(sum(abs(Uhat-U)) < 0.02*N)
+%    disp('pseudos(x) works!');
+%end

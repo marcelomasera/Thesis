@@ -1,0 +1,116 @@
+\section{Constrained optimization}
+\label{optimisation}
+One difficulty in the problem at hand is to find a way to balance foreign exchange risk on
+one hand and the costs associated to margin calls on the other. This exercise proves difficult
+given that these two forces have different units. We posited that the costs associated to
+margin calls are an increasing function of their frequency, and chose to minimize the foreign exchange
+risk on the posted collateral conditionally to an arbitrary upper bound on the probability
+of a margin call. \cite{chanramkumar11} offers an elegant framework
+to a problem similar in nature to ours. Their goal is to balance trading costs associated
+with the rebalancing of a given portfolio and tracking error. Their solution is to
+minimize the trading costs subject to an imposed upper ceiling on the forecasted
+tracking error. Our objective function described below is inspired from this approach.
+
+We formulate the issue at hand as a one-period constrained optimization problem.
+The first step consists in choosing a risk measure to assess the foreign exchange
+risk. This work uses the expected tracking error (ETE), the Value-at-Risk (VaR) and
+the Tail Conditional Expectation (TCE). The method consists in finding the cash
+balances that minimize the (foreign exchange) risk measure subject to an arbitrary
+tolerance for the probability of a margin call. A mathematical formulation of the
+optimization objective is
+\begin{equation}
+\label{riskmeasure} \min_{\lambda_{1,t}, \ldots, \lambda_{D,t}}
+R^{\alpha}\left( \sum_{i=1}^D \left( \lambda_{i,t} -
+\lambda_{i,t}^{\ast} \right) \cdot Y_{i,t+1} \right),
+\end{equation}
+where
+\begin{equation}
+\label{riskmeasure2}
+R^{\alpha}(X) = \left\{ \begin{array}{cl}
+              \mathbb{E}\left[ \left| X\right| \right] & \mbox{ for expected tracking error}, \\
+              -\mathbb{Q}_{\alpha}(X) & \mbox{ for Value-at-Risk}, \\
+              -\mathbb{E}[X|X\leq \mathbb{Q}_{\alpha}(X)] & \mbox{ for Tail Conditional Expectation}. \\
+       \end{array} \right.
+\end{equation}
+where $\mathbb{Q}_{\alpha}(X)$, $\alpha \ \in \ [0,1]$ is a  quantile of $X$
+such that $P(X\leq\mathbb{Q}_{\alpha}(X))=\alpha$. In words,
+equation~(\ref{riskmeasure}) finds the collateral in each
+currency $\lambda_{1,t}, \ldots, \lambda_{D,t}$  above the minimum
+margins requirements imposed by the counterparty
+$\lambda_{1,t}^{\ast}$, $\ldots$, $\lambda_{D,t}^{\ast}$ that
+minimizes one of the risk measures $R^{\alpha}(\cdot)$ described in
+equation~(\ref{riskmeasure2}) against the changes in the exchange
+rates $Y_{1,t+1}$, $\ldots$, $Y_{D,t+1}$.
+The first constraint of the optimization is
+\begin{displaymath}
+\lambda_{i,t}^{\ast}\leq\lambda_{i,t}\leq\infty,\ i=1,\ldots,D,
+\end{displaymath}
+that is, each posted collateral $\lambda_{i,t}$ must be between the
+minimum margin requirement $\lambda_{i,t}^{\ast}$ and infinity.  The
+second constraint of the optimization is
+\begin{displaymath}
+%\label{probmargincall}
+\mathbb{P} \left( \left( \prod_{i=1}^D \mathds{1}\left(
+\lambda_{i,t} + \mbox{PnL}_{i,t+1}\geq
+\lambda_{i,t}^{\ast}\right)\right)=0 \right) \leq P_{\mbox{tol}},
+\end{displaymath}
+where
+\begin{displaymath}
+%\label{pnl}
+\mbox{PnL}_{i,t+1}=\sum_{j=1}^{n_{i,t}} {}_i\omega_{j,t} \cdot {}_i
+W_{j,t+1}.
+\end{displaymath}
+Here, $P_{\mbox{tol}}$ is an arbitrary tolerance for the probability
+of a margin call,  $n_{i,t}$ is the number of different assets of
+the $i^{th}$ currency held,  ${}_i\omega_{j,t}$ is the number of the
+$j^{th}$ asset of the  $i^{th}$ currency held and ${}_i W_{j,t+1}$
+is the change in the $j^{th}$ asset of the $i^{th}$ currency between
+time $t$ and $t+1$. To make things clear, the only random variables
+in the model are the $Y_{i,t}$ and the ${}_i W_{j,t+1}$.
+Furthermore, these random variables are not independent of each
+other. That is, the spot exchange rates are not independent of the
+futures contracts prices and vice versa.
+
+The proposed methodology for the optimization is as follow: First,
+univariate process are fitted to each time-series of log returns of
+exchange rates and future prices. This step often involves the
+calibration of parameters with the maximum likelihood estimation
+method. Second, goodness-of-fit tests of the selected model are
+performed on each time-series. If the test result is negative for a
+given time-series of log returns, then another univariate model is
+chosen for that specific time-series and the process is started anew
+from the first step. Again, different time-series can have different
+univariate models. Third, a parametric multivariate copula is fitted
+to the normalized ranks of the standardized residuals obtained in
+the first step. Fourth, a goodness-of-fit test as put forward in
+Appendix~\ref{GOF} is performed on the copula-based dynamic model
+with respect to the sample of time-series. If the test result is
+negative, another copula is chosen and the process is restarted from
+the third step. At this point, we know that the model is appropriate
+for the data (at least in the statistical sense of the term). Here
+is where Monte Carlo methods come into play. Fifth, a large number
+$N$ of $D$-dimensional $U[0,1]$ realizations is drawn from the
+parametric copula, were $D$ is the number of time-series modeled.
+Most modern statistical software packages provide tools to perform
+this step for elliptical copulas. One can refer to \cite{marshallolkin88}
+and to \cite{melchiori06} for Archimedean copula random variable
+gerneration. Sixth, the simulated standardized residuals
+of each univariate process are obtained by entering the uniform
+drawings from the previous step into their respective inverse
+cumulative distribution function. Seventh, the simulated
+realizations of the log returns are obtained by combining of the
+random standardized residuals and the computed deterministic part of
+each univariate process. The final step consists in using
+constrained numerical optimization to find the values of the control
+variables that optimize the objective function while satisfying the
+constraint function. For us, the control variables are the amount of
+collateral held in each currency, the objective function is the risk
+measure (tracking error, Var and TCE) and the constraint function is
+the probability of a margin call. Notice that both the objective and
+constraint are functions of the control variables (the amount of
+collateral held in each foreign currency) and the
+realizations from the Monte Carlo simulation (the log returns of
+exchange rates and future prices). The objective and constraint
+functions being nonlinear, we obtained the best results using the
+interior point optimization method, closely followed by the active
+set algorithm.

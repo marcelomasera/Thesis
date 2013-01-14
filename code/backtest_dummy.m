@@ -12,7 +12,7 @@ BUFFER=501;
 
 resultset.model = 'naive';
 
-[metadata,data] = loadData(datenum('28-Mar-2012'),20000000,'graphoff');
+[metadata,data] = loadData(datenum('28-Dec-2012'),20000000);
 
 T = length(data.dates);
 
@@ -29,7 +29,7 @@ resultset.aum = NaN(1,T-BUFFER-1);
 
 for(t=BUFFER+1:T)
     
-    disp(strcat('Backtesting, day',32,num2str(t-BUFFER),32,'of',32,num2str(T-buffer),', Elapsed time:',32,num2str(toc),32,'secs'));
+    disp(strcat('Backtesting, day',32,num2str(t-BUFFER),32,'of',32,num2str(T-BUFFER),', Elapsed time:',32,num2str(toc),32,'secs'));
     
     balances = MULTIPLICATOR*data.marginsReq(t-1,:);
     

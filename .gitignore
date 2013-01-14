@@ -8,16 +8,14 @@
 */Rosenblatt_Clayton.m
 */Rosenblatt_Gaussian.m
 */Rosenblatt_Student.m
-*/Sn_b.m
+*/Sn_B.m
 */Student_cop.m
-*/pseudos.m
+*/cl.m
 *.mexa64
 *.mexw32
 *.mat
 
 # LaTeX stuff
-*.tex
-*.bib
 *.aux
 *.bbl
 *.blg
@@ -35,7 +33,8 @@
 corr1.pdf
 corr2.pdf
 corr3.pdf
-latex_paper/*
 latex_thesis/*
 papers/*
 presentation/*
+*.m~
+

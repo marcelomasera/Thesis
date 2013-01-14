@@ -6,7 +6,7 @@
 % Alexandre Beaulne, Dec. 2011
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-[metadata,data] = loadData(datenum('28-Mar-2012'),20000000);
+[metadata,data] = loadData(datenum('28-Dec-2012'),20000000);
 
 freqGOF = 250;
 

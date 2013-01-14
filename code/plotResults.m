@@ -1,8 +1,18 @@
 
 function plotResults(riskMeasure,alpha,tolerance,period,mode,color,print)
 %
+% E.g. uses: 
+%
 % plotResults('ETE',0.05,0.05,'complete','% collateral',true,true)
 % plotResults('ETE',0.05,0.05,'crisis','% collateral',true,false)
+%
+% plotResults('ETE',0.05,0.05,'complete','% collateral',false,true)
+% plotResults('VaR',0.05,0.05,'complete','% collateral',false,false)
+% plotResults('TCE',0.05,0.05,'complete','% collateral',false,false)
+%
+% plotResults('ETE',0.05,0.05,'crisis','% collateral',false,false)
+% plotResults('VaR',0.05,0.05,'crisis','% collateral',false,false)
+% plotResults('TCE',0.05,0.05,'crisis','% collateral',false,false)
 %
 
 %%%%%%%%%%%%%%%%%%% params to change %%%%%%%%%%%%%%%%%%%%%%
@@ -204,8 +214,7 @@ else
 end
 
 if(print)
-    % saveas(h,'dailyPnLfx.jpg')
-    export_fig dailyPnLfx -jpg -r300 -zbuffer
+    printfig(h,6,6,'dailyPnLfx','.eps',300)
 end
 
 % --------------------------- /Plot 1 -------------------------------------
@@ -242,7 +251,7 @@ if(strcmp(riskMeasure,'ETE'))
     ylabel(strcat('Frequency (out of',32,int2str(T),32,'days)'))
 
     if(print)
-        export_fig histETE -jpg -r300
+        printfig(h4,6,4,'histETE','.eps',200)
     end
 
 elseif(strcmp(riskMeasure,'VaR'))

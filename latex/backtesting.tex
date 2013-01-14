@@ -1,0 +1,151 @@
+\subsection{Alternative strategies}
+\label{altstrats}
+In order to access the validity of our model, we backtested it on
+the dataset presented in the previous section. We also backtested
+two other strategies on the same dataset to contrast their
+performances.
+
+The first, ``naive'' strategy simply consists in keeping twice the compulsory
+collateral in the cash accounts at all times. That is, the collateral posted
+in the accounts of the different currencies is brought back to twice the mandatory
+minimum every day according to that day's movements in futures contracts prices
+and holdings.
+
+The second strategy consists in modeling the returns of the futures
+contracts and exchange rates with a static multivariate normal
+distribution as in the Markowitz framework. Doing so allows us to
+gauge the accuracy added by factoring in stochastic volatility and
+higher co-moments as done by the model proposed in
+Section~\ref{modelling}.
+
+
+\subsection{Calibration}
+A buffer of 500 business days (approximately 2 years) is used at
+the beginning of the sample to calibrate the marginal processes
+and the dependence copula
+parameters. The
+means and covariance matrix for the static multivariate strategy
+is also computed with this buffer. Both models are recalibrated
+every day using all data from the beginning of the sample (i.e.
+with an extending window).
+
+The tolerance for the probability of a margin call $P_{tol}$ was
+arbitrarily set to 0.05, which was also the level chosen for the
+quantile $\alpha$ of the VaR and TCE measures.
+
+Once at the beginning and then every 250 business days, with an
+extending window, the goodness-of-fit tests described in
+Appendix~\ref{GOF} were performed on both the marginal processes and
+the dependence copulas. The results of the goodness-of-fit tests for
+the AR(1)-GARCH(1,1) with Gaussian residuals, AR(2)-GARCH(2,2) with
+Gaussian residuals, AR(1)-GARCH(1,1) with Student residuals and
+different dependence copulas are displayed in
+tables~\ref{ar1garch11}, \ref{ar2garch22}, \ref{ar1garch11_t} and
+\ref{copulas} respectively. Clearly, a combination of
+AR(1)-GARCH(1,1) with Student residuals and the Student copula is
+the only appropriate model from a statistical point of view for the
+time-series at hand.
+\begin{table}[p]
+    \begin{adjustwidth}{-1in}{-1in}
+    \centering
+    \input{ar1garch11.tex}
+    \end{adjustwidth}
+    \caption[GOF tests of AR(1)-GARCH(1,1) with Gaussian residuals]{\emph{p}-values from the goodness-of-fit tests of AR(1)-GARCH(1,1) with Gaussian residuals on the marginal processes. The number of bootstrapped samples is $N=100$.}
+    \label{ar1garch11}
+\end{table}
+\begin{table}[p]
+    \begin{adjustwidth}{-1in}{-1in}
+    \centering
+    \input{ar2garch22.tex}
+    \end{adjustwidth}
+    \caption[GOF tests of AR(2)-GARCH(2,2) with Gaussian residuals]{\emph{p}-values from the goodness-of-fit tests of AR(2)-GARCH(2,2) with Gaussian residuals on the marginal processes. The number of bootstrapped samples is $N=100$}
+    \label{ar2garch22}
+\end{table}
+\begin{table}[p]
+    \begin{adjustwidth}{-1in}{-1in}
+    \centering
+    \input{ar1garch11_t.tex}
+    \end{adjustwidth}
+    \caption[GOF tests of AR(1)-GARCH(1,1) with Student residuals]{\emph{p}-values from the goodness-of-fit tests of AR(1)-GARCH(1,1) with Student residuals on the marginal processes. The number of bootstrapped samples is $N=100$.}
+    \label{ar1garch11_t}
+\end{table}
+\begin{table}[htb]
+    \begin{adjustwidth}{-1in}{-1in}
+    \centering
+    \input{copulas.tex}
+    \end{adjustwidth}
+    \caption[GOF test of dependence copulas]{\emph{p}-values from the goodness-of-fit tests of copulas. The marginal processes were modeled with AR(1)-GARCH(1,1) with Student residuals. The number of bootstrapped samples is $N=100$.}
+    \label{copulas}
+\end{table}
+
+\subsection{Results}
+
+Tables~\ref{resultsETE_complete},~\ref{resultsVaR_complete}~and~\ref{resultsTCE_complete}
+exhibit the results of the backtests
+over the entire sample for the three risk measures of interest.
+The copula-based multivariate dynamic approach always had the
+lowest frequency of margin
+calls, while maintaining similar risk measures realizations.
+\begin{table}[p]
+    \begin{adjustwidth}{-1in}{-1in}
+    \centering
+    \input{resultsETE_complete.tex}
+    \end{adjustwidth}
+    \caption[Results of the backtests - Minimized ETE - 2003-2012]{Results of the backtests for the three strategies for the complete dataset period (November 2003 to March 2012) when the optimization objective is set to minimize the tracking error.}
+    \label{resultsETE_complete}
+\end{table}
+\begin{table}[p]
+    \begin{adjustwidth}{-1in}{-1in}
+    \centering
+    \input{resultsVaR_complete.tex}
+    \end{adjustwidth}
+    \caption[Results of the backtests - Minimized VaR - 2003-2012]{Results of the backtests for the three strategies for the complete dataset period (November 2003 to March 2012) when the optimization objective is set to minimize the Value-at-Risk.}
+    \label{resultsVaR_complete}
+\end{table}
+\begin{table}[p]
+    \begin{adjustwidth}{-1in}{-1in}
+    \centering
+    \input{resultsTCE_complete.tex}
+    \end{adjustwidth}
+    \caption[Results of the backtests - Minimized TCE - 2003-2012]{Results of the backtests for the three strategies for the complete dataset period (November 2003 to March 2012) when the optimization objective is set to maximize the Tail Conditional Expectation}
+    \label{resultsTCE_complete}
+\end{table}
+The quality of a risk management strategy is known during rough,
+volatile markets environments. We thus observed how our proposed
+model fared during the 2008-2009 financial crisis. We chose the period
+form March $17^{th}$ 2008, the fall of Bear Stearns, followed not long
+after by Lehman Brothers and American Insurance Group (AIG), to February $17^{th}$ 2009, when
+the American Recovery and Reinvestment Act was passed. As
+we now know this date did not mark the end of the crisis, but it does
+represent a milestone when volatility in the futures and exchange rates
+markets declined. Tables~\ref{resultsETE_crisis}, \ref{resultsVaR_crisis} and
+\ref{resultsTCE_crisis} exhibit the results of the backtests
+over this critical period. During the crisis, the copula-based multivariate
+dynamic model clearly outperformed the two other strategies. Though it did
+breach the limits on the frequency of margin calls, it did so in a way much less
+drastic than the naive and Gaussian strategies, while realizing similar risk statistics.
+\begin{table}[p]
+    \begin{adjustwidth}{-1in}{-1in}
+    \centering
+    \input{resultsETE_crisis.tex}
+    \end{adjustwidth}
+    \caption[Results of the backtests - Minimized ETE - 2008-2009]{Results of the backtests for the three strategies for the crisis subperiod (March 2008 to February 2009) when the optimization objective is set to minimize the tracking error.}
+    \label{resultsETE_crisis}
+\end{table}
+\begin{table}[p]
+    \begin{adjustwidth}{-1in}{-1in}
+    \centering
+    \input{resultsVaR_crisis.tex}
+    \end{adjustwidth}
+    \caption[Results of the backtests - Minimized VaR - 2008-2009]{Results of the backtests for the three strategies for the crisis subperiod (March 2008 to February 2009) when the optimization objective is set to minimize the Value-at-Risk.}
+    \label{resultsVaR_crisis}
+\end{table}
+\begin{table}[p]
+    \begin{adjustwidth}{-1in}{-1in}
+    \centering
+    \input{resultsTCE_crisis.tex}
+    \end{adjustwidth}
+    \caption[Results of the backtests - Minimized TCE - 2008-2009]{Results of the backtests for the three strategies for the crisis subperiod (March 2008 to February 2009) when the optimization objective is set to maximize the Tail Conditional Expectation.}
+    \label{resultsTCE_crisis}
+\end{table}
+

@@ -19,7 +19,7 @@ function [p,N] = backtestGOFcopula(margin,copula,N,freqGOF)
 
 BUFFER=500;
 
-[metadata,data] = loadData(datenum('28-Mar-2012'),20000000);
+[metadata,data] = loadData(datenum('28-Dec-2012'),20000000);
 
 T = length(data.dates);
 
@@ -57,11 +57,11 @@ for i = startTime:n
     z = NaN(size(dX));
 
     for j = 1:numMargins
-        [SPECS(j).SPEC,garbage2,garbage3,Innovations,Sigmas] = garchfit(SPEC,dX(:,j));
+        [garbage1,garbage2,garbage3,Innovations,Sigmas] = garchfit(SPEC,dX(:,j));
         z(:,j) = Innovations./Sigmas;
     end
   
-    p(i)=GOFcopula(copula,z,N);
+    p(i) = GOFcopula(copula,z,N);
 
     save(filename,'p','N');
 

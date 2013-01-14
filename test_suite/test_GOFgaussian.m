@@ -1,16 +1,20 @@
 
-mu = [0 0 0];
+N = 1000;
 
-Sigma = [-1 2 3; 2 3 0; 3 0 4];
+d = 3;
 
-Sigma = pos_def(Sigma);
+Temp = rand(3,3);
 
-x = mvnrnd(mu,Sigma,1000);
+Sigma = Temp'*Temp;
 
-p_normal = GOFgaussian(x)
+Rho = corrcov(Sigma);
 
-nu = 10;
+U = copularnd('Gaussian',Rho,N);
 
-x = mvtrnd(Sigma,nu,1000);
+p_normal = GOFgaussian(U,200)
 
-p_student = GOFgaussian(x)
+nu = 4;
+
+U = copularnd('t',Rho,nu,N);
+
+p_student = GOFgaussian(U,200)

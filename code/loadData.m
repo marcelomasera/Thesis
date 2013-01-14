@@ -3,7 +3,7 @@ function [metadata,data] = loadData(tgtdate,tgtAUM)
 % the tgtdate specified by the argument, the target AUM in USD specified in
 % the tgtAUM argument, and displayMode is either 'graphon' or 'graphoff'.
 %
-% [metadata,data] = loadData(datenum('28-Mar-2012'),20000000)
+% [metadata,data] = loadData(datenum('28-Dec-2012'),20000000)
 
 try
     load('IndexData.mat',...

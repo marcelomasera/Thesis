@@ -1,6 +1,6 @@
 % Plot QQ plot (Mahalanobis distance) to show multivariate normality
 
-[metadata,data] = loadData(datenum('28-Mar-2012'),20000000);
+[metadata,data] = loadData(datenum('28-Dec-2012'),20000000);
 
 dC = log(data.contractsPrices(2:end,:)./data.contractsPrices(1:end-1,:));
 dr = log(data.xrates(2:end,:)./data.xrates(1:end-1,:));
@@ -18,12 +18,12 @@ end
 
 PD = ProbDistUnivParam('gamma', [d/2 2]);
 
-scrsz = get(0,'ScreenSize');
-f = figure('Position',[scrsz(3)/4 scrsz(4)/6 scrsz(3)/3 scrsz(4)/2.5]);
+f = figure;
 set(f,'Color',[1 1 1]);
-set(f, 'Renderer', 'painters')
 
 h = qqplot(D2,PD);
+
+xlim([-3 35]);
 
 set(h(1),'LineStyle','none');
 set(h(1),'Color','k');
@@ -32,14 +32,12 @@ set(h(1),'MarkerEdgeColor','k');
 
 set(h(3),'LineStyle','--');
 set(h(3),'Color','k');
-% set(h(2),'Marker','+');
-% set(h(2),'MarkerEdgeColor','k');
-
-% title('Graphical test of multivariate normality - QQ plot');
+set(h(2),'Marker','+');
+set(h(2),'MarkerEdgeColor','k');
 title('');
-xlabel('\chi^2_{\nu} quantiles')
+xlabel('$$\chi^2_{\nu}$$ quantiles','interpreter','latex');
 ylabel('Mahalanobis squared distances quantiles');
 legend([h(3) h(1)],'Expected','Observed','Location','NorthWest');
 
-export_fig mvQQplot -jpg -r300 -zbuffer
+printfig(f,4,4,'mvQQplot','.eps',300)
 
